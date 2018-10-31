@@ -1,0 +1,10 @@
+{
+    "name": "Slackbot",
+    "version": "0.0.1",
+    "description": "Bot to remind slacking raiders",
+    "main": "src/bot.js",
+    "author": "Kungfumoo (Aaron Winter)",
+    "dependencies": {
+        "discord.js": "^11.4.2"
+    }
+}
