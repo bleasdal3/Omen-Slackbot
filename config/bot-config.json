@@ -1,0 +1,8 @@
+{
+    "signups": {
+        "interval": {
+            "weekdays": [6, 2],
+            "hour": 12
+        }
+    }
+}
