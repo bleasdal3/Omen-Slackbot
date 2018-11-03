@@ -1,6 +1,6 @@
 'use strict';
 
-require("./job.js")
+var Job = require("./job.js");
 
 class SignUpChaser extends Job {
     onInterval() {
@@ -16,5 +16,13 @@ class SignUpChaser extends Job {
         this.processJob();
     }
 
-    processJob() {}
+    processJob() {
+        let unsigned = this.database.fetchUnSignedRaiders();
+
+        unsigned.forEach(function(user) {
+            console.log(user);
+        });
+    }
 }
+
+module.exports = SignUpChaser;

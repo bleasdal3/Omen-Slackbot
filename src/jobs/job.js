@@ -1,8 +1,9 @@
 'use strict';
 
 class Job {
-    constructor(config) {
+    constructor(config, database) {
         this.config = config;
+        this.database = database;
     }
 
     onInterval() {}
@@ -10,4 +11,4 @@ class Job {
     processJob() {}
 }
 
-module.exports = {Job: Job};
+module.exports = Job;
