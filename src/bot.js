@@ -5,26 +5,28 @@ const jobs = require('./jobs');
 const db = require('./db');
 
 const client = new Discord.Client();
-const CHECK_PERIOD = 1000;//3.6e6;
+const CHECK_PERIOD = 5000;//3.6e6;
 const database = new db.MockDatabase(null);
 const jobsToRun = [
-    new jobs.SignUpChaser(config.signups, database)
+    new jobs.SignUpChaser(config.signups, client, database)
 ];
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
+
+    client.setInterval(() => {
+        jobsToRun.forEach(function(job) {
+            job.processJob(); //TODO: onInterval
+        });
+    }, CHECK_PERIOD);
 });
 
 client.on('message', msg => {
     if (msg.content === 'ping') {
         msg.reply('pong');
     }
-});
 
-client.setInterval(() => {
-    jobsToRun.forEach(function(job) {
-        job.processJob(); //TODO: onInterval
-    });
-}, CHECK_PERIOD);
+    //todo: PM command to update raider roster db
+});
 
 client.login(auth.token);

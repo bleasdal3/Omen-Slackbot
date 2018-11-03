@@ -1,8 +1,9 @@
 'use strict';
 
 class Job {
-    constructor(config, database) {
+    constructor(config, discord, database) {
         this.config = config;
+        this.discord = discord;
         this.database = database;
     }
 

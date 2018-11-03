@@ -8,6 +8,11 @@ class SignUpChaser extends Job {
         let dow = date.getDay();
         let hour = date.getHours();
 
+        //reset process counter
+        if (this.processed && this.processed.getDay() != dow) {
+            this.processed = false;
+        }
+
         if (this.config.weekdays.indexOf(dow) == -1 &&
             hour != this.config.hour) {
             return;
@@ -17,11 +22,30 @@ class SignUpChaser extends Job {
     }
 
     processJob() {
+        if (this.processed) {
+            return;
+        }
+
         let unsigned = this.database.fetchUnSignedRaiders();
 
+        if (unsigned.length == 0) {
+            return;
+        }
+
+        let channel = this.discord.channels.get(this.config.channel);
+
+        if (!channel) {
+            console.log("No channel found, unable to execute this job");
+            return;
+        }
+
+        let mentions = '';
         unsigned.forEach(function(user) {
-            console.log(user);
-        });
+            mentions += ' <@' + user + '>';
+        }.bind(this));
+
+        channel.send("Please sign up for the raid" + mentions);
+        this.processed = new Date();
     }
 }
 

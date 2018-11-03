@@ -3,6 +3,7 @@
         "interval": {
             "weekdays": [6, 2],
             "hour": 12
-        }
+        },
+        "channel": "497106004450738178"
     }
 }

@@ -6,8 +6,8 @@ class MockDatabase extends Database
 {
     fetchUnSignedRaiders() {
         return [
-            "Kungfumoo#8622",
-            "Tymia#2748"
+            "230604196490117120", //kfm
+            "230102238306107392" //tym
         ];
     }
 }
