@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  node:
+    image: node:10.13.0-stretch
+    links:
+      - mysql:mysql
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./:/home/node/app
+    expose:
+      - "8081"
+    command: "npm start"
+
+  mysql:
+     image: mysql/mysql-server:5.7
+     environment:
+       MYSQL_USER: bot
+       MYSQL_PASSWORD: bot
+       MYSQL_DATABASE: bot
+       MYSQL_ROOT_PASSWORD: mysql
+     volumes:
+      - ./db:/opt
+      - bot-mysql-data:/var/lib/mysql
+
+volumes:
+  bot-mysql-data:
+    driver: local
