@@ -16,18 +16,32 @@ client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 
     client.setInterval(() => {
-        jobsToRun.forEach(function(job) {
-            job.processJob(); //TODO: onInterval
+        jobsToRun.forEach((job) => {
+            //job.processJob(); //TODO: onInterval
         });
     }, CHECK_PERIOD);
 });
 
 client.on('message', msg => {
-    if (msg.content === 'ping') {
-        msg.reply('pong');
-    }
+    if (msg.content === '!listRaiders' && msg.author.id == config.main.admin) {
+        const guild = client.guilds.get(config.main.guild);
 
-    //todo: PM command to update raider roster db
+        if (!(guild && guild.available)) {
+            return;
+        }
+
+        let membersWithRole = guild.roles.get("474545706841931776").members; //raider
+
+        membersWithRole.array().forEach((member) => {
+            let name = member.nickname;
+
+            if (!name) {
+                name = member.displayName;
+            }
+
+            msg.reply(member.id + " : " + name);
+        });
+    }
 });
 
 client.login(auth.token);
