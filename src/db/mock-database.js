@@ -10,6 +10,10 @@ class MockDatabase extends Database
             "230102238306107392" //tym
         ];
     }
+
+    fetchRequiredDonaters() {
+        return this.fetchUnSignedRaiders();
+    }
 }
 
 module.exports = MockDatabase;

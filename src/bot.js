@@ -8,7 +8,8 @@ const client = new Discord.Client();
 const CHECK_PERIOD = 5000;//3.6e6;
 const database = new db.MockDatabase(null);
 const jobsToRun = [
-    new jobs.SignUpChaser(config.signups, client, database)
+    new jobs.SignUpChaser(config.signups, client, database),
+    new jobs.DonateChaser(config.donations, client, database)
 ];
 
 client.on('ready', () => {
