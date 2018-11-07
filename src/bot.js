@@ -1,12 +1,15 @@
 const Discord = require('discord.js');
+const mysql = require('mysql');
 const auth = require('../auth.json');
 const config = require('../config/bot-config.json');
 const jobs = require('./jobs');
 const db = require('./db');
 
 const client = new Discord.Client();
-const CHECK_PERIOD = 5000;//3.6e6;
-const database = new db.MockDatabase(null);
+const CHECK_PERIOD = 5000;
+//const database = new db.MockDatabase(null);
+const database = new db.Database(mysql.createConnection(require('../config/mysql-config.json'));
+
 const jobsToRun = [
     new jobs.SignUpChaser(config.signups, client, database),
     new jobs.DonateChaser(config.donations, client, database)
