@@ -45,8 +45,7 @@ class SignUpChaser extends Job {
                 mentions += ' <@' + user + '>';
             }.bind(this));
 
-            //channel.send("Please sign up for the raid" + mentions);
-            console.log("Please sign up for the raid" + mentions);
+            channel.send("Please sign up for the raid" + mentions);
             this.processed = new Date();
         });
     }

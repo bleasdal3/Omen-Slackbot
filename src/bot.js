@@ -20,7 +20,7 @@ client.on('ready', () => {
 
     client.setInterval(() => {
         jobsToRun.forEach((job) => {
-            job.processJob(); //TODO: onInterval
+            //job.processJob(); //TODO: onInterval
         });
     }, CHECK_PERIOD);
 });
