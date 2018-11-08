@@ -9,7 +9,8 @@ CREATE TABLE missingDonations (
     name VARCHAR(255)
 );
 
-CREATE TABLE missingSigns (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255)
+CREATE TABLE signs(
+    signDate DATE,
+    player VARCHAR(255),
+    PRIMARY KEY(signDate, player)
 );
