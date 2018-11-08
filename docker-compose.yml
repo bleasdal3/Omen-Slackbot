@@ -12,7 +12,7 @@ services:
       - ./:/home/node/app
     expose:
       - "8081"
-    command: "npm start"
+    command: "node src/bot.js"
 
   mysql:
      image: mysql/mysql-server:5.7

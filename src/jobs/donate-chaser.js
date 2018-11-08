@@ -26,26 +26,28 @@ class DonateChaser extends Job {
             return;
         }
 
-        let raiders = this.database.fetchRequiredDonaters();
+        let promise = this.database.fetchRequiredDonaters();
 
-        if (raiders.length == 0) {
-            return;
-        }
+        promise.then((raiders) => {
+            if (raiders.length == 0) {
+                return;
+            }
 
-        let channel = this.discord.channels.get(this.config.channel);
+            let channel = this.discord.channels.get(this.config.channel);
 
-        if (!channel) {
-            console.log("No channel found, unable to execute this job");
-            return;
-        }
+            if (!channel) {
+                console.log("No channel found, unable to execute this job");
+                return;
+            }
 
-        let mentions = '';
-        raiders.forEach(function(user) {
-            mentions += ' <@' + user + '>';
-        }.bind(this));
+            let mentions = '';
+            raiders.forEach(function(user) {
+                mentions += ' <@' + user + '>';
+            }.bind(this));
 
-        channel.send("Missing donations from:" + mentions);
-        this.processed = new Date();
+            channel.send("Missing donations from:" + mentions);
+            this.processed = new Date();
+        });
     }
 }
 

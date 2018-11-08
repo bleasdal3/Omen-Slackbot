@@ -8,7 +8,7 @@ const db = require('./db');
 const client = new Discord.Client();
 const CHECK_PERIOD = 5000;
 //const database = new db.MockDatabase(null);
-const database = new db.Database(mysql.createConnection(require('../config/mysql-config.json'));
+const database = new db.Database(mysql.createConnection(require('../config/mysql-config.json')));
 
 const jobsToRun = [
     new jobs.SignUpChaser(config.signups, client, database),
@@ -20,7 +20,7 @@ client.on('ready', () => {
 
     client.setInterval(() => {
         jobsToRun.forEach((job) => {
-            //job.processJob(); //TODO: onInterval
+            job.processJob(); //TODO: onInterval
         });
     }, CHECK_PERIOD);
 });

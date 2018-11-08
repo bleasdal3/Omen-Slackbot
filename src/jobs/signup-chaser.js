@@ -26,26 +26,29 @@ class SignUpChaser extends Job {
             return;
         }
 
-        let unsigned = this.database.fetchUnSignedRaiders();
+        let promise = this.database.fetchUnSignedRaiders();
 
-        if (unsigned.length == 0) {
-            return;
-        }
+        promise.then((unsigned) => {
+            if (unsigned.length == 0) {
+                return;
+            }
 
-        let channel = this.discord.channels.get(this.config.channel);
+            let channel = this.discord.channels.get(this.config.channel);
 
-        if (!channel) {
-            console.log("No channel found, unable to execute this job");
-            return;
-        }
+            if (!channel) {
+                console.log("No channel found, unable to execute this job");
+                return;
+            }
 
-        let mentions = '';
-        unsigned.forEach(function(user) {
-            mentions += ' <@' + user + '>';
-        }.bind(this));
+            let mentions = '';
+            unsigned.forEach(function(user) {
+                mentions += ' <@' + user + '>';
+            }.bind(this));
 
-        channel.send("Please sign up for the raid" + mentions);
-        this.processed = new Date();
+            //channel.send("Please sign up for the raid" + mentions);
+            console.log("Please sign up for the raid" + mentions);
+            this.processed = new Date();
+        });
     }
 }
 
