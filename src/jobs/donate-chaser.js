@@ -14,7 +14,7 @@ class DonateChaser extends Job {
         }
 
         if (this.config.interval.weekdays.indexOf(dow) == -1 &&
-            hour != this.config.hour) {
+            hour != this.config.interval.hour) {
             return;
         }
 
