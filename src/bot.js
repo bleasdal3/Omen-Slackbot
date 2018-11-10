@@ -6,7 +6,7 @@ const jobs = require('./jobs');
 const db = require('./db');
 
 const client = new Discord.Client();
-const CHECK_PERIOD = 5000;
+const CHECK_PERIOD = 60000;
 //const database = new db.MockDatabase(null);
 const database = new db.Database(mysql.createConnection(require('../config/mysql-config.json')));
 
@@ -22,6 +22,11 @@ client.on('ready', () => {
         jobsToRun.forEach((job) => {
             //job.processJob(); //TODO: onInterval
         });
+
+        //keep connection alive, I'm sure you are not supposed to do this lol but oh well
+        if (database.connection) {
+            database.connection.query("SELECT 1", () => {});
+        }
     }, CHECK_PERIOD);
 });
 
