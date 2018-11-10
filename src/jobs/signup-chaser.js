@@ -13,7 +13,7 @@ class SignUpChaser extends Job {
             this.processed = false;
         }
 
-        if (this.config.interval.weekdays.indexOf(dow) == -1 &&
+        if (this.config.interval.weekdays.indexOf(dow) == -1 ||
             hour != this.config.interval.hour) {
             return;
         }
