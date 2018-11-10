@@ -29,21 +29,19 @@ class Database {
 
     fetchRequiredDonaters() {
         return new Promise((resolve, reject) => {
-            return new Promise((resolve, reject) => {
-                let users = [];
+            let users = [];
 
-                this.connection.query(
-                    "SELECT u.id FROM discordUsers AS u WHERE u.websiteName IN " +
-                    "(SELECT s.name FROM missingDonations AS s)",
-                    (error, results, fields) => {
-                        results.forEach((result) => {
-                            users.push(result.id);
-                        });
+            this.connection.query(
+                "SELECT u.id FROM discordUsers AS u WHERE u.websiteName IN " +
+                "(SELECT s.name FROM missingDonations AS s)",
+                (error, results, fields) => {
+                    results.forEach((result) => {
+                        users.push(result.id);
+                    });
 
-                        resolve(users);
-                    }
-                );
-            });
+                    resolve(users);
+                }
+            );
         });
     }
 }
