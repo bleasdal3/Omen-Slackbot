@@ -1,7 +1,8 @@
 CREATE TABLE discordUsers (
     id VARCHAR(32) PRIMARY KEY,
     discordName VARCHAR(255),
-    websiteName VARCHAR(255)
+    websiteName VARCHAR(255),
+    recruit TINYINT(1) DEFAULT 0
 );
 
 CREATE TABLE missingDonations (
