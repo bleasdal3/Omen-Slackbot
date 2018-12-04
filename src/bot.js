@@ -52,4 +52,9 @@ client.on('message', msg => {
     }
 });
 
+client.on('error', (error) => {
+    console.log(error.name);
+    console.log(error.message);
+});
+
 client.login(auth.token);
