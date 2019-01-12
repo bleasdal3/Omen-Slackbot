@@ -44,7 +44,7 @@ class DonateChaser extends Job {
 
             let mentions = '';
 
-            for (user in raiders) {
+            for (let user in raiders) {
                 mentions += ' <@' + user + '> (flasks needed: ' + (raiders[user] * FLASKS_PER_WEEK) + ')';
             }
 
