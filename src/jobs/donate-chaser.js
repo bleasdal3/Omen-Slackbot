@@ -2,6 +2,8 @@
 
 var Job = require("./job.js");
 
+const FLASKS_PER_WEEK = 3;
+
 class DonateChaser extends Job {
     onInterval() {
         let date = new Date();
@@ -29,7 +31,7 @@ class DonateChaser extends Job {
         let promise = this.database.fetchRequiredDonaters();
 
         promise.then((raiders) => {
-            if (raiders.length == 0) {
+            if (!raiders) {
                 return;
             }
 
@@ -41,9 +43,10 @@ class DonateChaser extends Job {
             }
 
             let mentions = '';
-            raiders.forEach(function(user) {
-                mentions += ' <@' + user + '>';
-            }.bind(this));
+
+            for (user in raiders) {
+                mentions += ' <@' + user + '> (flasks needed: ' + (raiders[user] * FLASKS_PER_WEEK) + ')';
+            }
 
             channel.send("Missing donations from:" + mentions);
             this.processed = new Date();

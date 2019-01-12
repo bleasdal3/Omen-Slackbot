@@ -15,10 +15,10 @@ class MockDatabase extends Database
 
     fetchRequiredDonaters() {
         return new Promise((resolve, reject) => {
-            resolve([
-                "230604196490117120", //kfm
-                "230102238306107392" //tym
-            ]);
+            resolve({
+                "230604196490117120": 2, //kfm
+                "230102238306107392": 42 //tym
+            });
         });
     }
 }
