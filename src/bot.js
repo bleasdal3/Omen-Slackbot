@@ -31,24 +31,35 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-    if (msg.content === '!listRaiders' && msg.author.id == config.main.admin) {
-        const guild = client.guilds.get(config.main.guild);
+    if (msg.author.id == config.main.admin) {
+      if (msg.content === '!listRaiders') {
+          const guild = client.guilds.get(config.main.guild);
 
-        if (!(guild && guild.available)) {
-            return;
+          if (!(guild && guild.available)) {
+              return;
+          }
+
+          let membersWithRole = guild.roles.get("474545706841931776").members; //raider
+
+          membersWithRole.array().forEach((member) => {
+              let name = member.nickname;
+
+              if (!name) {
+                  name = member.displayName;
+              }
+
+              msg.reply(member.id + " : " + name);
+          });
+      } else {
+        let found = msg.content.match(/\!comment[\s]*(.*)/);
+
+        if (found) {
+          let message = found[1];
+          let channel = client.channels.get(config.main.channel);
+
+          channel.send(message);
         }
-
-        let membersWithRole = guild.roles.get("474545706841931776").members; //raider
-
-        membersWithRole.array().forEach((member) => {
-            let name = member.nickname;
-
-            if (!name) {
-                name = member.displayName;
-            }
-
-            msg.reply(member.id + " : " + name);
-        });
+      }
     }
 });
 
