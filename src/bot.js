@@ -32,34 +32,45 @@ client.on('ready', () => {
 
 client.on('message', msg => {
     if (msg.author.id == config.main.admin) {
-      if (msg.content === '!listRaiders') {
-          const guild = client.guilds.get(config.main.guild);
+        if (msg.content === '!listRaiders') {
+            const guild = client.guilds.get(config.main.guild);
 
-          if (!(guild && guild.available)) {
-              return;
-          }
+            if (!(guild && guild.available)) {
+                return;
+            }
 
-          let membersWithRole = guild.roles.get("474545706841931776").members; //raider
+            let membersWithRole = guild.roles.get(config.main.raiderRole).members; //raider
 
-          membersWithRole.array().forEach((member) => {
-              let name = member.nickname;
+            membersWithRole.array().forEach((member) => {
+                let name = member.nickname;
 
-              if (!name) {
-                  name = member.displayName;
-              }
+                if (!name) {
+                    name = member.displayName;
+                }
 
-              msg.reply(member.id + " : " + name);
-          });
-      } else {
-        let found = msg.content.match(/\!comment[\s]*(.*)/);
+                msg.reply(member.id + " : " + name);
+            });
+        } else {
+            let found = msg.content.match(/\!comment[\s]*(.*)/);
 
-        if (found) {
-          let message = found[1];
-          let channel = client.channels.get(config.main.channel);
+            if (found) {
+                let message = found[1];
+                let channel = client.channels.get(config.main.channel);
 
-          channel.send(message);
+                channel.send(message);
+            }
         }
-      }
+    }
+});
+
+client.on('guildMemberUpdate', (oldMember, newMember) => {
+    let oldRoles = oldMember.roles;
+    let newRoles = newMember.roles;
+
+    if (oldRoles.has(config.main.raiderRole) && !newRoles.has(config.main.raiderRole)) { //demotion!
+        (new jobs.RoleUpdater(config.main, client, database)).handleRoleRemoval(newMember);
+    } else if (!oldRoles.has(config.main.raiderRole) && newRoles.has(config.main.raiderRole)) { //promotion!
+        (new jobs.RoleUpdater(config.main, client, database)).handleRoleAdd(newMember);
     }
 });
 
