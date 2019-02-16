@@ -10,7 +10,7 @@ class RoleUpdater extends Job {
             //notify admin
             let adminUser = this.discord.fetchUser(this.config.admin);
 
-            adminUser.send("Removed user " + discordUser.id);
+            adminUser.sendMessage("Removed user " + discordUser.id);
         });
     }
 
@@ -24,7 +24,7 @@ class RoleUpdater extends Job {
 
         name = discordUser.id + " : " + name;
 
-        adminUser.send("You need to add the user " + name);
+        adminUser.sendMessage("You need to add the user " + name);
     }
 }
 
