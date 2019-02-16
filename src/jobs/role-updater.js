@@ -4,12 +4,14 @@ var Job = require("./job.js");
 
 class RoleUpdater extends Job {
     handleRoleRemoval(discordUser) {
-        //NOTE: update database
+        let promise = this.database.removeUser(discordUser.id);
 
-        //notify admin
-        let adminUser = this.discord.fetchUser(this.config.admin);
+        promise.then(() => {
+            //notify admin
+            let adminUser = this.discord.fetchUser(this.config.admin);
 
-        adminUser.send("Removed user " + discordUser.id);
+            adminUser.send("Removed user " + discordUser.id);
+        });
     }
 
     handleRoleAdd(discordUser) {
@@ -20,7 +22,7 @@ class RoleUpdater extends Job {
             name = discordUser.displayName;
         }
 
-        name = member.id + " : " + name;
+        name = discordUser.id + " : " + name;
 
         adminUser.send("You need to add the user " + name);
     }

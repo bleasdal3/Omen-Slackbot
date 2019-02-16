@@ -21,6 +21,12 @@ class MockDatabase extends Database
             });
         });
     }
+
+    removeUser(userId) {
+        return new Promise((resolve, reject) => {
+            resolve();
+        });
+    }
 }
 
 module.exports = MockDatabase;

@@ -30,7 +30,7 @@ class Database {
     fetchRequiredDonaters() {
         return new Promise((resolve, reject) => {
             let users = {};
-            
+
             this.connection.query(
                 "SELECT u.id, s.missing FROM discordUsers AS u " +
                 "INNER JOIN missingDonations AS s ON u.websiteName = s.name " +
@@ -46,6 +46,22 @@ class Database {
                     });
 
                     resolve(users);
+                }
+            );
+        });
+    }
+
+    removeUser(userId) {
+        return new Promise((resolve, reject) => {
+            let query = this.connection.format(
+                "DELETE FROM discordUsers WHERE id = ?",
+                [userId]
+            );
+
+            this.connection.query(
+                query,
+                (error, results, fields) => {
+                    resolve();
                 }
             );
         });
