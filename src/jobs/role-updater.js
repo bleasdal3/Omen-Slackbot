@@ -8,23 +8,28 @@ class RoleUpdater extends Job {
 
         promise.then(() => {
             //notify admin
-            let adminUser = this.discord.fetchUser(this.config.admin);
+            let discordPromise = this.discord.fetchUser(this.config.admin);
 
-            adminUser.sendMessage("Removed user " + discordUser.id);
+            discordPromise.then((adminUser) => {
+                adminUser.send("Removed user " + discordUser.id);
+            });
         });
     }
 
     handleRoleAdd(discordUser) {
-        let adminUser = this.discord.fetchUser(this.config.admin);
-        let name = discordUser.nickname;
+        let discordPromise = this.discord.fetchUser(this.config.admin);
 
-        if (!name) {
-            name = discordUser.displayName;
-        }
+        discordPromise.then((adminUser) => {
+            let name = discordUser.nickname;
 
-        name = discordUser.id + " : " + name;
+            if (!name) {
+                name = discordUser.displayName;
+            }
 
-        adminUser.sendMessage("You need to add the user " + name);
+            name = discordUser.id + " : " + name;
+
+            adminUser.send("You need to add the user " + name);
+        });
     }
 }
 
