@@ -11,7 +11,15 @@ class RoleUpdater extends Job {
             let discordPromise = this.discord.fetchUser(this.config.admin);
 
             discordPromise.then((adminUser) => {
-                adminUser.send("Removed user " + discordUser.id);
+                let name = discordUser.nickname;
+
+                if (!name) {
+                    name = discordUser.displayName;
+                }
+
+                name = discordUser.id + " : " + name;
+
+                adminUser.send("Removed user " + name);
             });
         });
     }
